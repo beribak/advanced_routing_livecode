@@ -7,14 +7,13 @@
 
 
 
-<div class="container">
+<div class="">
   <img src="<%= @garden.banner_url %>" alt="" class="m-auto w-50 d-flex justify-content-center">
-</div>
 
-<div class="m-auto">
-  
-  <%= link_to 'Edit', edit_garden_path(@garden) %> |
-  <%= link_to 'Back', gardens_path %>
+    <div class="text-center my-4">
+      <%= link_to 'Edit', edit_garden_path(@garden) %> |
+      <%= link_to 'Back', gardens_path %>
+    </div>
 </div>
 
 
@@ -26,12 +25,19 @@
   <% end %>
 </div>
 
-<div class="text-center d-flex justify-content-center">
+<div class="text-center d-flex justify-content-center p-3">
   <% @garden.plants.each do |plant| %>
-    <div class="p-3">
-      <h3><%= plant.name %></h3>
-      <div><%= link_to "Delete", garden_plant_path(garden_id: @garden.id, id: plant.id ), method: :delete, data: {confirm: "Are you sure you want to kill me??????"} %></div>
+    <div class="p-3 bg bg-light ml-1">
       <img src="<%= plant.image_url %>" alt="" style="width: 200px;">
+      <h3><%= plant.name %></h3>
+      <div class="card-tags">
+        <% plant.tags.each do |tag| %>
+          <span><%= tag.name %></span>
+        <% end %>
+        <%= link_to "+", new_plant_plant_tag_path(plant) %>
+      </div>
+      <div><%= link_to "Add Tag", new_plant_plant_tag_path(plant) %></div>
+      <div><%= link_to "Delete", garden_plant_path(garden_id: @garden.id, id: plant.id ), method: :delete, data: {confirm: "Are you sure you want to kill me??????"} %></div>
     </div>
   <% end %>
 </div>
